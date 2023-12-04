@@ -16,22 +16,16 @@ import java.util.List;
 
 @Controller
 public class CarController {
-    private final CarServiceImpl carService;
+    private final CarService carService;
+
     @Autowired
-    public CarController(CarServiceImpl carService) {
+    public CarController(CarService carService) {
         this.carService = carService;
     }
 
     @GetMapping("/cars")
-public String getAllCars(@RequestParam(value="count",defaultValue = "5") int count, Model model){
-        List<Car> carList=new ArrayList<>();
-        carList.add(new Car("BMW",1,180));
-        carList.add(new Car("BMW",2,200));
-        carList.add(new Car("BMW",3,220));
-        carList.add(new Car("BMW",4,240));
-        carList.add(new Car("BMW",5,260));
-        carList=carService.getCars(carList,count);
-        model.addAttribute("carlist",carList);
+    public String getAllCars(@RequestParam(value = "count", defaultValue = "5") int count, Model model) {
+        model.addAttribute("carlist", carService.getCars(count));
         return "cars";
     }
 }
